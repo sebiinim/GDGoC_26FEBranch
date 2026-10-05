@@ -1,0 +1,9 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# 환경변수 파일은 커밋하지 않습니다. (.env.example 만 커밋합니다)
+.env
+.env.*
+!.env.example
