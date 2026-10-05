@@ -1,0 +1,217 @@
+/* ------------------------------------------------------------------
+   나만의 단어장 — 사전 과제의 style.css 에 1회차 추가분을 얹은 파일입니다.
+   ------------------------------------------------------------------ */
+
+/* :root 는 페이지 전체를 뜻합니다.
+   여기에 자주 쓰는 값을 이름표(CSS 변수)로 저장해두고
+   아래에서 var(이름) 으로 꺼내 씁니다. 색을 바꾸고 싶으면 여기만 고치면 됩니다. */
+:root {
+  --color-bg: #f4f5f7; /* 페이지 배경색 */
+  --color-card: #ffffff; /* 카드 배경색 */
+  --color-text: #1f2430; /* 기본 글자색 */
+  --color-muted: #6b7280; /* 흐린 글자색 (발음기호, 예문) */
+  --color-accent: #4f46e5; /* 강조색 (품사 배지) */
+  --radius: 16px; /* 모서리 둥글기 */
+  --gap: 20px; /* 요소 사이 간격 */
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 카드 그림자 */
+}
+
+/* 브라우저가 기본으로 넣어주는 여백을 없애고,
+   padding 을 넣어도 크기가 커지지 않도록 계산 방식을 바꿉니다. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* 한글이 예쁘게 나오도록 운영체제별 한글 폰트를 순서대로 적어둡니다.
+     앞의 폰트가 없으면 다음 폰트를 사용합니다. */
+  font-family: system-ui, -apple-system, "Apple SD Gothic Neo",
+    "Malgun Gothic", "Noto Sans KR", sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  padding: 40px 20px;
+}
+
+/* ---------- 페이지 머리말 ---------- */
+
+.page-header {
+  max-width: 1000px;
+  margin: 0 auto 32px; /* 위 0 / 좌우 auto(가운데 정렬) / 아래 32px */
+  text-align: center;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.page-subtitle {
+  color: var(--color-muted);
+  font-size: 15px;
+}
+
+/* ---------- 카드 목록 ---------- */
+
+.card-list {
+  display: flex; /* 자식(카드)들을 가로로 나란히 놓습니다 */
+  flex-wrap: wrap; /* 자리가 모자라면 다음 줄로 넘깁니다 */
+  gap: var(--gap); /* 카드 사이 간격 */
+  justify-content: center;
+  max-width: 1000px;
+  margin: 0 auto; /* 목록 전체를 화면 가운데로 */
+}
+
+/* ---------- 카드 한 장 ---------- */
+
+.card {
+  flex: 1 1 280px; /* 기본 너비 280px, 남는 공간이 있으면 함께 늘어납니다 */
+  max-width: 320px;
+  background-color: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+
+  display: flex; /* 카드 안의 요소들을 */
+  flex-direction: column; /* 위에서 아래로 쌓고 */
+  gap: 10px; /* 사이에 간격을 줍니다 */
+  align-items: flex-start; /* 왼쪽 정렬 */
+}
+
+.card-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-word {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.card-pron {
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+/* 품사는 작은 알약 모양 배지로 만듭니다. */
+.card-pos {
+  font-size: 12px;
+  color: var(--color-accent);
+  background-color: rgba(79, 70, 229, 0.1);
+  border-radius: 999px; /* 아주 큰 값을 주면 완전한 알약 모양이 됩니다 */
+  padding: 3px 10px;
+}
+
+.card-meaning {
+  font-size: 16px;
+}
+
+.card-example {
+  font-size: 14px;
+  color: var(--color-muted);
+  font-style: italic;
+  border-left: 3px solid var(--color-accent);
+  padding-left: 10px;
+}
+
+/* ---------- 1회차 추가분 ---------- */
+
+/* 카드 전체가 클릭 가능해졌으므로 손가락 커서를 띄우고,
+   뜻이 보였다 숨었다 해도 카드 높이가 크게 흔들리지 않도록 최소 높이를 줍니다. */
+.card {
+  cursor: pointer;
+  min-height: 200px;
+  user-select: none; /* 클릭할 때 글자가 드래그 선택되는 것을 막습니다 */
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* 뜻이 숨겨져 있을 때 보여주는 안내 문구입니다. */
+.card-hint {
+  font-size: 15px;
+  color: var(--color-muted);
+}
+
+/* 목록이 비었을 때 카드 대신 보여주는 문구입니다. */
+.empty-message {
+  text-align: center;
+  color: var(--color-muted);
+  margin-top: 24px;
+}
+
+/* ---------- 반응형: 화면이 좁아지면 카드를 세로로 쌓기 ---------- */
+
+/* 화면 너비가 640px 이하일 때만 아래 스타일이 적용됩니다. */
+@media (max-width: 640px) {
+  .card-list {
+    flex-direction: column; /* 가로가 아니라 세로로 쌓기 */
+    align-items: stretch; /* 카드를 화면 너비만큼 늘리기 */
+  }
+
+  .card {
+    max-width: 100%;
+    min-height: 0; /* 세로로 쌓일 때는 높이를 억지로 맞출 필요가 없습니다 */
+  }
+}
+
+
+/* ── 삭제 버튼 (1회차 §B-3) ───────────────────────── */
+.card-actions {
+  margin-top: auto;
+  padding-top: 14px;
+  display: flex;
+  gap: 8px;
+}
+
+.card-button {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  background-color: #fff;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.card-button-danger {
+  color: #c0392b;
+  border-color: #f0c9c4;
+}
+
+
+/* ── 단어 추가 폼 (1회차 과제 필수 1) ─────────────────── */
+.add-form {
+  max-width: 1000px;
+  margin: 0 auto 24px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.add-input {
+  flex: 1 1 180px;
+  border: 1px solid #dcdfe5;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.add-submit {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #fff;
+  background-color: var(--color-accent);
+  cursor: pointer;
+}
